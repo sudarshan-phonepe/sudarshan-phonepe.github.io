@@ -33,6 +33,7 @@ async function getExpressbuyResults(paymentRequestContext){
 }
 
 async function warmupAndSaveResults(paymentRequestContext) {
+    console.log(navigator.userAgent);
     var userOperatingSystem = navigator.userAgent.split(';')[1].trim();
     var network = navigator.connection.effectiveType;
     var isAndroid = false;
@@ -42,6 +43,8 @@ async function warmupAndSaveResults(paymentRequestContext) {
     var retries = sessionStorage.getItem('hasEnrolledInstrumentRetries') ?? 0;
     if(userOperatingSystem.includes("Android"))
         isAndroid = true;
+    console.log(userOperatingSystem);
+    console.log(isAndroid);
 
     var data = {
         url: "ppe://expressbuy",
