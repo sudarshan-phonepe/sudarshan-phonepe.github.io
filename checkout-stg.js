@@ -23,7 +23,7 @@ function shouldWarmUp(phonepeCheckoutData) {
 async function getExpressbuyResults(paymentRequestContext){
     if(sessionStorage.getItem('phonepeCheckoutData') == null || shouldWarmUp(sessionStorage.getItem('phonepeCheckoutData')))
         await warmupAndSaveResults(paymentRequestContext);
-    var phonepeCheckoutData = sessionStorage.getItem('phonepeCheckoutData');
+    var phonepeCheckoutData = JSON.parse(sessionStorage.getItem('phonepeCheckoutData'));
 
     return {
         'userOperatingSystem': phonepeCheckoutData.getItem('userOperatingSystem'),
@@ -86,5 +86,5 @@ async function warmupAndSaveResults(paymentRequestContext) {
         'updatedTime' : Date.now()
     }
 
-    sessionStorage.setItem('phonepeCheckoutData', phonepeCheckoutData);
+    sessionStorage.setItem('phonepeCheckoutData', JSON.stringify(phonepeCheckoutData));
 }
