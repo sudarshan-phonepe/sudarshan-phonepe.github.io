@@ -8,27 +8,32 @@ function createPhonepePaymentRequest(data){
     return paymentRequestPhonepe;
 }
 
-function openPhonepeExpressbuy(ppeUrl, handleResponse, handleError) {
-    var data = {
-        url: ppeUrl,
-    };
-    var paymentRequestPhonepe = createPhonepePaymentRequest(data);
-    if(paymentRequestPhonepe == null) return;
-    paymentRequestPhonepe.show().then(handlePaymentResponse).catch(handleError);
+function shouldWarmUp(phonepeCheckoutData) {
+    var MS_PER_MINUTE = 60000;
+    var minUpdatedTime = Date.now() - 10 * MS_PER_MINUTE;
+    if(phonepeCheckoutData.getItem('updatedTime') == null )
+        return true;
+    if(phonepeCheckoutData.getItem('updatedTime') <  minUpdatedTime)
+        return true;
+    if(phonepeData.getItem('eligibilityForExpressbuy') == 'false')
+        return true;
+    return false;
 }
 
 async function getExpressbuyResults(paymentRequestContext){
-    if(sessionStorage.getItem('eligibilityForExpressbuy') == null || sessionStorage.getItem('eligibilityForExpressbuy') == 'false')
+    if(sessionStorage.getItem('phonepeCheckoutData') == null || shouldWarmUp(sessionStorage.getItem('phonepeCheckoutData')))
         await warmupAndSaveResults(paymentRequestContext);
+    var phonepeCheckoutData = sessionStorage.getItem('phonepeCheckoutData');
+
     return {
-        'userOperatingSystem': sessionStorage.getItem('userOperatingSystem'),
-        'network': sessionStorage.getItem('network'),
-        'eligibility': sessionStorage.getItem('eligibilityForExpressbuy'),
-        'canMakePayment': sessionStorage.getItem('canMakePayment'),
-        'hasEnrolledInstrument': sessionStorage.getItem('hasEnrolledInstrument'),
-        'retries': sessionStorage.getItem('hasEnrolledInstrumentRetries'),
-        'elapsedTime': sessionStorage.getItem('elapsedTime'),
-        'paymentRequestSupported': sessionStorage.getItem('paymentRequestSupported')
+        'userOperatingSystem': phonepeCheckoutData.getItem('userOperatingSystem'),
+        'network': phonepeCheckoutData.getItem('network'),
+        'eligibility': phonepeCheckoutData.getItem('eligibilityForExpressbuy'),
+        'canMakePayment': phonepeCheckoutData.getItem('canMakePayment'),
+        'hasEnrolledInstrument': phonepeCheckoutData.getItem('hasEnrolledInstrument'),
+        'retries': phonepeCheckoutData.getItem('hasEnrolledInstrumentRetries'),
+        'elapsedTime': phonepeCheckoutData.getItem('elapsedTime'),
+        'paymentRequestSupported': phonepeCheckoutData.getItem('paymentRequestSupported')
     };
 }
 
@@ -68,12 +73,18 @@ async function warmupAndSaveResults(paymentRequestContext) {
         endTime = performance.now();
         var elapsedTime = endTime - startTime;
     }
-    sessionStorage.setItem('hasEnrolledInstrumentRetries', retries);
-    sessionStorage.setItem('eligibilityForExpressbuy', hasEnrolledInstrument);
-    sessionStorage.setItem('userOperatingSystem', userOperatingSystem);
-    sessionStorage.setItem('paymentRequestSupported', paymentRequestSupported);
-    sessionStorage.setItem('hasEnrolledInstrument', hasEnrolledInstrument);
-    sessionStorage.setItem('elapsedTime', elapsedTime);
-    sessionStorage.setItem('canMakePayment', canMakePayment);
-    sessionStorage.setItem('network', network);
+    
+     var phonepeCheckoutData = {
+        'hasEnrolledInstrumentRetries', retries,
+        'eligibilityForExpressbuy', hasEnrolledInstrument,
+        'userOperatingSystem', userOperatingSystem,
+        'paymentRequestSupported', paymentRequestSupported,
+        'hasEnrolledInstrument', hasEnrolledInstrument,
+        'elapsedTime', elapsedTime,
+        'canMakePayment', canMakePayment,
+        'network': network,
+        'updatedTime' : Date.now()
+    }
+
+    sessionStorage.setItem('phonepeCheckoutData', phonepeCheckoutData);
 }
