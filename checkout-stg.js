@@ -26,14 +26,14 @@ async function getExpressbuyResults(paymentRequestContext){
     var phonepeCheckoutData = JSON.parse(sessionStorage.getItem('phonepeCheckoutData'));
 
     return {
-        'userOperatingSystem': phonepeCheckoutData.getItem('userOperatingSystem'),
-        'network': phonepeCheckoutData.getItem('network'),
-        'eligibility': phonepeCheckoutData.getItem('eligibilityForExpressbuy'),
-        'canMakePayment': phonepeCheckoutData.getItem('canMakePayment'),
-        'hasEnrolledInstrument': phonepeCheckoutData.getItem('hasEnrolledInstrument'),
-        'retries': phonepeCheckoutData.getItem('hasEnrolledInstrumentRetries'),
-        'elapsedTime': phonepeCheckoutData.getItem('elapsedTime'),
-        'paymentRequestSupported': phonepeCheckoutData.getItem('paymentRequestSupported')
+        'userOperatingSystem': phonepeCheckoutData['userOperatingSystem'],
+        'network': phonepeCheckoutData['network'],
+        'eligibility': phonepeCheckoutData['eligibilityForExpressbuy'],
+        'canMakePayment': phonepeCheckoutData['canMakePayment'],
+        'hasEnrolledInstrument': phonepeCheckoutData['hasEnrolledInstrument'],
+        'retries': phonepeCheckoutData['hasEnrolledInstrumentRetries'],
+        'elapsedTime': phonepeCheckoutData['elapsedTime'],
+        'paymentRequestSupported': phonepeCheckoutData['paymentRequestSupported']
     };
 }
 
