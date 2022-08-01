@@ -75,13 +75,13 @@ async function warmupAndSaveResults(paymentRequestContext) {
     }
     
      var phonepeCheckoutData = {
-        'hasEnrolledInstrumentRetries', retries,
-        'eligibilityForExpressbuy', hasEnrolledInstrument,
-        'userOperatingSystem', userOperatingSystem,
-        'paymentRequestSupported', paymentRequestSupported,
-        'hasEnrolledInstrument', hasEnrolledInstrument,
-        'elapsedTime', elapsedTime,
-        'canMakePayment', canMakePayment,
+        'hasEnrolledInstrumentRetries': retries,
+        'eligibilityForExpressbuy': hasEnrolledInstrument,
+        'userOperatingSystem': userOperatingSystem,
+        'paymentRequestSupported': paymentRequestSupported,
+        'hasEnrolledInstrument': hasEnrolledInstrument,
+        'elapsedTime': elapsedTime,
+        'canMakePayment': canMakePayment,
         'network': network,
         'updatedTime' : Date.now()
     }
