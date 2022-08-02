@@ -43,9 +43,9 @@ async function warmupAndSaveResults(paymentRequestContext) {
     var retries = sessionStorage.getItem('hasEnrolledInstrumentRetries') ?? 0;
     if(userOperatingSystem.includes("Android"))
         isAndroid = true;
+    var elapsedTime = -1;
     console.log(userOperatingSystem);
     console.log(isAndroid);
-    var elapsedTime = -1;
 
     var data = {
         url: "ppe://expressbuy",
