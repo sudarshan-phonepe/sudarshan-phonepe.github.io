@@ -56,7 +56,7 @@ async function warmupAndSaveResults(paymentRequestContext) {
     {
         paymentRequestSupported = true;
         canMakePayment = await paymentRequestPhonepe.canMakePayment();
-        startTime = performance.now();
+        var startTime = performance.now();
         var pageRetryLimit = 3;
         while(canMakePayment == true && retries < 9 && hasEnrolledInstrument == false && pageRetryLimit > 0)
         {
@@ -66,7 +66,7 @@ async function warmupAndSaveResults(paymentRequestContext) {
             retries++;
             pageRetryLimit--;
         }
-        endTime = performance.now();
+        var endTime = performance.now();
         elapsedTime = endTime - startTime;
     }
     sessionStorage.setItem('hasEnrolledInstrumentRetries', retries);
