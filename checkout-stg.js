@@ -33,7 +33,6 @@ async function getExpressbuyResults(paymentRequestContext){
 }
 
 async function warmupAndSaveResults(paymentRequestContext) {
-    try{
     console.log(navigator.userAgent);
     var userOperatingSystem = navigator.userAgent.split(';')[1].trim();
     var network = navigator.connection.effectiveType;
@@ -78,7 +77,4 @@ async function warmupAndSaveResults(paymentRequestContext) {
     sessionStorage.setItem('elapsedTime', elapsedTime);
     sessionStorage.setItem('canMakePayment', canMakePayment);
     sessionStorage.setItem('network', network);
-    }catch(e){
-        console.log(e);
-    }
 }
