@@ -45,6 +45,7 @@ async function warmupAndSaveResults(paymentRequestContext) {
         isAndroid = true;
     console.log(userOperatingSystem);
     console.log(isAndroid);
+    var elapsedTime = -1;
 
     var data = {
         url: "ppe://expressbuy",
@@ -66,7 +67,7 @@ async function warmupAndSaveResults(paymentRequestContext) {
             pageRetryLimit--;
         }
         endTime = performance.now();
-        var elapsedTime = endTime - startTime;
+        elapsedTime = endTime - startTime;
     }
     sessionStorage.setItem('hasEnrolledInstrumentRetries', retries);
     sessionStorage.setItem('eligibilityForExpressbuy', hasEnrolledInstrument);
