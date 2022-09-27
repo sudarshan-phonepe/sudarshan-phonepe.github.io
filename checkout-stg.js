@@ -12,7 +12,7 @@ function openPhonepeExpressbuy(ppeUrl, handleResponse, handleError) {
     var data = {
         url: ppeUrl,
     };
-    var paymentRequestPhonepe = createPhonepePaymentRequest(data);
+    var paymentRequestPhonepe = createPhonepePaymentRequest(data, 1);
     if(paymentRequestPhonepe == null) return;
     paymentRequestPhonepe.show().then(handlePaymentResponse).catch(handleError);
 }
@@ -51,7 +51,7 @@ async function warmupAndSaveResults(paymentRequestContext) {
         url: "ppe://expressbuy",
         constraints : paymentRequestContext?.constraints ?? []
     }
-    var paymentRequestPhonepe = createPhonepePaymentRequest(data);
+    var paymentRequestPhonepe = createPhonepePaymentRequest(data, 1);
     if(isAndroid && paymentRequestPhonepe != null)
     {
         paymentRequestSupported = true;
@@ -62,7 +62,7 @@ async function warmupAndSaveResults(paymentRequestContext) {
         {
             hasEnrolledInstrument = await paymentRequestPhonepe.hasEnrolledInstrument()
             if(hasEnrolledInstrument) break;
-            paymentRequestPhonepe = createPhonepePaymentRequest(data);
+            paymentRequestPhonepe = createPhonepePaymentRequest(data, 1);
             retries++;
             pageRetryLimit--;
         }
